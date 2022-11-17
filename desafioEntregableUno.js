@@ -53,12 +53,12 @@ const getBookNames = () => {
     return usuarioNuevo.books.map(books => books.name);
 };
 
-console.log(getFullName());
- console.log(addPet('Mocho'));
-console.log(countPets());
-console.log(addBook('El Señor de los Anillos', 'J. R. R. Tolkien'))
- console.log(usuarioNuevo);  
-console.log(getBookNames());
+// console.log(getFullName());
+// console.log(addPet('Mocho'));
+// console.log(countPets());
+// console.log(addBook('El Señor de los Anillos', 'J. R. R. Tolkien'));
+// console.log(usuarioNuevo);  
+// console.log(getBookNames());
 
 
 
