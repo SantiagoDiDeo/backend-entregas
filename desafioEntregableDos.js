@@ -7,7 +7,7 @@ class Contenedor {
   };
 
   async getFile() {
-
+        
     try {
       const products = await fs.promises.readFile( this.file, 'utf-8');
       return JSON.parse(products);
