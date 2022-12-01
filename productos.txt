@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "title": "Banana",
+    "price": 90,
+    "thumbnail": "urlBanana",
+    "id": 1
+  }
+]

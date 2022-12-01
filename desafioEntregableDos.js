@@ -131,9 +131,9 @@ const test = async() => {
 
 
     // //deleteAll
-    await productos.deleteAll();
+    /* await productos.deleteAll();
     products = await productos.getFile();
-    console.log(`deleteAll: ${JSON.stringify(products, null, 2)}`);
+    console.log(`deleteAll: ${JSON.stringify(products, null, 2)}`); */
 
 
   } catch(err) {
