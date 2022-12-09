@@ -4,5 +4,59 @@
     "price": 90,
     "thumbnail": "urlBanana",
     "id": 1
+  },
+  {
+    "title": "Apple",
+    "price": 75,
+    "thumbnail": "urlApple",
+    "id": 3
+  },
+  {
+    "title": "Banana",
+    "price": 90,
+    "thumbnail": "urlBanana",
+    "id": 4
+  },
+  {
+    "title": "Apple",
+    "price": 75,
+    "thumbnail": "urlApple",
+    "id": 5
+  },
+  {
+    "title": "Banana",
+    "price": 90,
+    "thumbnail": "urlBanana",
+    "id": 6
+  },
+  {
+    "title": "Apple",
+    "price": 75,
+    "thumbnail": "urlApple",
+    "id": 7
+  },
+  {
+    "title": "Banana",
+    "price": 90,
+    "thumbnail": "urlBanana",
+    "id": 8
+  },
+  {
+    "title": "Apple",
+    "price": 75,
+    "thumbnail": "urlApple",
+    "id": 9
+  },
+  {
+    "title": "Banana",
+    "price": 90,
+    "thumbnail": "urlBanana",
+    "id": 10
+  },
+  {
+    "title": "Apple",
+    "price": 75,
+    "thumbnail": "urlApple",
+    "id": 11
   }
 ]
