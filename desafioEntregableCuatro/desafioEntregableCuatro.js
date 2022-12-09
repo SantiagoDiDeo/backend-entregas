@@ -50,6 +50,7 @@ productsRouter.put('/:id', ( req, res ) => {
 
     productList[index] = replace;
     
+    productList.push(replace);
      res.status(200).json({replace});
     
 });
