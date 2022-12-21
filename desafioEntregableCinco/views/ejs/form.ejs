@@ -1,0 +1,33 @@
+<%- include('./header.ejs') %>
+
+<div class="container">
+    &nbsp
+    <div class="alert alert-dark text-center" role="alert">
+      Ingrese producto
+    </div>
+  </div>
+
+  <form class="container form-group" action="/api/productos" method="POST" >
+    <div class="mb-2">
+      <label for="name" class="form-label fw-bold">Nombre</label>
+      <input type="text" class="form-control" id="name" name="title">
+    </div>
+    <div class="mb-2">
+      <label for="price" class="form-label fw-bold">Precio</label>
+      <input type="number" class="form-control" id="price" name="price">
+    </div>
+    <div class="mb-2">
+      <label for="picture" class="form-label fw-bold">Imagen (URL)</label>
+      <input type="text" class="form-control" id="picture" name="thumbnail" aria-describedby="pictureHelp">
+      
+    </div>
+    <a href="/productos">
+      <input type="submit" class="btn btn-primary" value="guardar" />
+   </a>
+    <!-- <a href="/productos">
+      <button type="submit" class="btn btn-primary text-center">Guardar</button>
+  </a> -->
+  </form>
+
+ </body>
+ </html>

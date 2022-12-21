@@ -1,0 +1,17 @@
+extends header.pug 
+
+block form
+    .modal-dialog
+        .modal-content
+          .modal-header
+            h4#myModalLabel.modal-title
+              | Ingrese producto
+          .modal-body
+            form(role='form' method='POST' action='/api/productos')
+              div.form-group
+                input#name.form-control(type='text', placeholder='nombre' name='title')
+              div.form-group
+                input#email.form-control(type='text', placeholder='precio' name='price')
+              div.form-group
+                input#email.form-control(type='text', placeholder='Imagen (url)' name='thumbnail')
+              button.btn.btn-primary(type="submit", name="submit") Guardar
