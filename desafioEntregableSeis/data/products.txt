@@ -1,0 +1,31 @@
+[
+  {
+    "id": "1",
+    "title": "Zanahoria",
+    "price": "35",
+    "thumbnail": "https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png"
+  },
+  {
+    "id": "2",
+    "title": "Mixer",
+    "price": "3500",
+    "thumbnail": "https://cdn2.iconfinder.com/data/icons/cooking-56/64/24-electric_appliances-electric_mixer-kitchenware-kitchen_pack-mix-mixer-blender-cooking-512.png"
+  },
+  {
+    "id": "3",
+    "title": "Manzana",
+    "price": "40",
+    "thumbnail": "https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-512.png"
+  },
+  {
+    "id": "4",
+    "title": "Guantes",
+    "price": "500",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/clothes-126/64/12-glovegloveautumnfashionglovesaccesories-512.png"
+  },
+  {
+    "id": "5",
+    "title": "Botas",
+    "price": "6000",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png"
+  }

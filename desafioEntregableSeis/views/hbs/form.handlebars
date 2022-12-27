@@ -1,0 +1,26 @@
+<section class='p-4 bg-secondary'>
+	<h2 class='alert alert-dark text-center'>Ingrese Producto</h2>
+	<form action='/' method='POST'>
+		<div class='mb-3'>
+			<label class='form-label fw-bold' for='name'>Nombre</label>
+			<input class='form-control' type='text' name='title' />
+		</div>
+		<div class='mb-3'>
+			<label class='form-label fw-bold' for='price'>Precio</label>
+			<input class='form-control' type='number' name='price' />
+		</div>
+		<div class='mb-3'>
+			<label class='form-label fw-bold' for='picture'>Foto URL</label>
+			<input class='form-control' type='text' name='thumbnail' />
+		</div>
+		<div class='mb-3'>
+			<input class='btn btn-primary' type='submit' value='Guardar' />
+		</div>
+	</form>
+</section>
+<section class='p-4 bg-success bg-gradient'>
+	<h2 class='alert alert-dark text-center'>Lista de productos</h2>
+	<div id="products"></div>
+	<table id="message"></table>
+	{{>chatForm}}
+</section>
