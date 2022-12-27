@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
 
   socket.on('newMessage', (msg) => {
     chat.push(msg);
-    socket.emit('chat', chat)
+    io.sockets.emit('chat', chat)
 
   });
   

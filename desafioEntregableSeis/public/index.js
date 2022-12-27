@@ -1,6 +1,6 @@
 const socket = io();
 
-socket.on('connection', () => {
+socket.on('connect', () => {
     console.log('connected')
 });
 
@@ -37,10 +37,11 @@ socket.on('chat', (data) => {
     document.getElementById('message').innerHTML = htmlToRender;
 })
 
-addMessages = (addMessage) => {
+let addMessage = (addMessage) => {
 let messageToAdd = {
-    email: '',
-    message: '',
-    date: '',
+    email: addMessage.email.value,
+    message: addMessage.message.value,
+    date: new Date().toLocaleDateString()
 }
+socket.emit('newMessage', messageToAdd)
 }
