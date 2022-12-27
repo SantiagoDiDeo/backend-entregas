@@ -1,0 +1,12 @@
+[
+    {
+  email: 'hola@hola.com',
+  message: 'hola!',
+  date: new Date().toLocaleDateString()
+},
+{
+  email: 'hola@hola.com',
+  message: 'hola!',
+  date: new Date().toLocaleDateString()
+}
+]

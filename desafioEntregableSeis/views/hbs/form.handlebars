@@ -1,26 +1,34 @@
+{{!-- formulario post --}}
 <section class='p-4 bg-secondary'>
 	<h2 class='alert alert-dark text-center'>Ingrese Producto</h2>
-	<form action='/' method='POST'>
+	<form id="form" action='/api/productos' method='POST'>
 		<div class='mb-3'>
 			<label class='form-label fw-bold' for='name'>Nombre</label>
-			<input class='form-control' type='text' name='title' />
+			<input class='form-control' type='text' name='title' id="title"/>
 		</div>
 		<div class='mb-3'>
 			<label class='form-label fw-bold' for='price'>Precio</label>
-			<input class='form-control' type='number' name='price' />
+			<input class='form-control' type='number' name='price' id="price" />
 		</div>
 		<div class='mb-3'>
 			<label class='form-label fw-bold' for='picture'>Foto URL</label>
-			<input class='form-control' type='text' name='thumbnail' />
+			<input class='form-control' type='text' name='thumbnail' id="thumbnail" />
 		</div>
 		<div class='mb-3'>
-			<input class='btn btn-primary' type='submit' value='Guardar' />
+			<button class='btn btn-primary' type='submit' value='Guardar'>Guardar</button>
 		</div>
 	</form>
 </section>
+{{!-- productlist --}}
 <section class='p-4 bg-success bg-gradient'>
 	<h2 class='alert alert-dark text-center'>Lista de productos</h2>
-	<div id="products"></div>
-	<table id="message"></table>
-	{{>chatForm}}
+	<div id="tableProducts"></div>
+	
 </section>
+{{!-- chat --}}
+<table id="message"></table>
+<form id="messageForm" action="">
+    <input type="email" name="email" id="email" placeholder="Ingrese su email">
+    <input type="text" name="message" id="message" placeholder="Ingrese su mensaje">
+    <button type="button" onclick="addMessage(messageForm)" id="button">Add</button>
+</form>
