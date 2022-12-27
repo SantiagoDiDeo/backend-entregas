@@ -4,17 +4,22 @@ socket.on('connect', () => {
     console.log('connected')
 });
 //agregar nuevo producto
-const tableProducts = document.getElementById('tableProducts')
-tableProducts.addEventListener('submit', (e) => {
-e.preventDefault()
-const producto = {
-    title: tableProducts[0].value,
-    price: tableProducts[1].value,
-    thumbnail: tableProducts[2].value
+const form = document.getElementById('form')
+try {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const producto = {
+            title: tableProducts[0].value,
+            price: tableProducts[1].value,
+            thumbnail: tableProducts[2].value
+        }
+        socket.emit('newProduct', producto)
+        form.reset()
+        })
+} catch {
+    console.log(new Error)
 }
-socket.emit('newProduct', producto)
-tableProducts.reset()
-})
+
 
 //lista productos
 socket.on('products',  (data) => {
