@@ -19,8 +19,10 @@ const express = require( 'express' );
 const { engine } = require('express-handlebars');
 const prodRouter = require('./routes/prodRouter');
 
-const ProductClass = require('./class/prodClass');
-//const products = new ProductClass('./data/products.txt');
+
+const {products} = require('./class/prodClass')
+// const ProductClass = require('./class/prodClass');
+// const products = new ProductClass('./data/products.txt');
 
 const app = express();
 const httpServer = require('http').createServer(app);
@@ -33,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/public', express.static(__dirname + '/public'));
 
-let products = [{
+/* let products = [{
   title: "Zanahoria",
   price: 35,
   thumbnail: "https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png"
@@ -43,7 +45,7 @@ let products = [{
   price: 35,
   thumbnail: "https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png"
 }
-];
+]; */
 
 let chat = [{
   email: 'hola@hola.com',
@@ -71,6 +73,7 @@ app.engine("handlebars", engine({
 
 app.get('/', async (req, res) => {
     res.render('form', {product: products, productExist: true});
+
   });
 
 //socket
@@ -87,7 +90,7 @@ io.on('connection', (socket) => {
   
   socket.on('newProduct', async (product) => {
     products.push(product);
-    await socket.emit('products', products)
+    await io.sockets.emit('products', products)
 
   });
 

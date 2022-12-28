@@ -4,17 +4,17 @@ socket.on('connect', () => {
     console.log('connected')
 });
 //agregar nuevo producto
-const form = document.getElementById('form')
+const formulario = document.getElementById('form')
 try {
-    form.addEventListener('submit', (e) => {
+    formulario.addEventListener('submit',  (e) => {
         e.preventDefault()
-        const producto = {
-            title: tableProducts[0].value,
-            price: tableProducts[1].value,
-            thumbnail: tableProducts[2].value
+        const product = {
+            title: formulario[0].value,
+            price: formulario[1].value,
+            thumbnail: formulario[2].value
         }
-        socket.emit('newProduct', producto)
-        form.reset()
+         socket.emit('newProduct', product)
+        
         })
 } catch {
     console.log(new Error)
@@ -35,8 +35,8 @@ socket.on('products',  (data) => {
       </tr>
     </thead>
     </tbody>`;
-
-    products.forEach(( element, index) => {
+    arrProducts = Array.from(products)
+    arrProducts.forEach(( element, index) => {
         htmlToRender = htmlToRender + `
         <tr>
           <th scope="row">${index + 1}</th>
@@ -46,7 +46,7 @@ socket.on('products',  (data) => {
         </tr>` 
     
     })
-    document.getElementById('products').innerHTML = htmlToRender;
+    document.getElementById('tableProducts').innerHTML = htmlToRender;
 })
 
 
@@ -59,9 +59,9 @@ socket.on('chat', (data) => {
     for (let i = 0; i < chat.length; i++) {
         htmlToRender = htmlToRender + `
         <tr>
-            <td><h1 class='user'>${chat[i].email}</h1></td>
-            <td><h1 class='mensaje'>${chat[i].message}</h1></td>
-            <td><h1 class='date'>${chat[i].date}</h1></td>
+            <th><h1 class='user'>${chat[i].email}</h1></th>
+            <th><h1 class='mensaje'>${chat[i].message}</h1></th>
+            <th><h1 class='date'>${chat[i].date}</h1></th>
         </tr>
         `
     }
@@ -81,7 +81,7 @@ function validateEmail(email) {
 let addMessage = (addMessage) => {
 let messageToAdd = {
     email: email.value,
-    message: message.value,
+    message: mensaje.value,
     date: new Date().toLocaleDateString()
 }
 

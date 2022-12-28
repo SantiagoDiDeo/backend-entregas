@@ -23,7 +23,7 @@ productsRouter.get('/:id', async ( req, res ) => {
 
     res.json({ product });
 
-}); 
+});
 
 //post product
 productsRouter.post('/productos', async (req, res) => {
