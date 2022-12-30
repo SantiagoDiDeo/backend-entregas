@@ -4,21 +4,19 @@ socket.on('connect', () => {
     console.log('connected')
 });
 //agregar nuevo producto
-const formulario = document.getElementById('form')
-try {
-    formulario.addEventListener('submit',  (e) => {
-        e.preventDefault()
-        const product = {
-            title: formulario[0].value,
-            price: formulario[1].value,
-            thumbnail: formulario[2].value
-        }
-         socket.emit('newProduct', product)
+// const formulario = document.getElementById('form')
+
+//     formulario.addEventListener('submit',  (e) => {
+//         e.preventDefault()
+//         const product = {
+//             title: formulario[0].value,
+//             price: formulario[1].value,
+//             thumbnail: formulario[2].value
+//         }
+//          socket.emit('newProduct', product)
         
-        })
-} catch {
-    console.log(new Error)
-}
+//         })
+
 
 
 //lista productos
@@ -35,8 +33,8 @@ socket.on('products',  (data) => {
       </tr>
     </thead>
     </tbody>`;
-    arrProducts = Array.from(products)
-    arrProducts.forEach(( element, index) => {
+   
+    products.forEach(( element, index) => {
         htmlToRender = htmlToRender + `
         <tr>
           <th scope="row">${index + 1}</th>
@@ -56,17 +54,20 @@ socket.on('products',  (data) => {
 socket.on('chat', (data) => {
     chat = data;    
     htmlToRender = '';
-    for (let i = 0; i < chat.length; i++) {
+    chat.forEach((e) => {
+
         htmlToRender = htmlToRender + `
         <tr>
-            <th><h1 class='user'>${chat[i].email}</h1></th>
-            <th><h1 class='mensaje'>${chat[i].message}</h1></th>
-            <th><h1 class='date'>${chat[i].date}</h1></th>
+            <th><h1 class='user'>${e.email}</h1></th>
+            <th><h1 class='mensaje'>${e.message}</h1></th>
+            <th><h1 class='date'>${e.date}</h1></th>
         </tr>
         `
-    }
+    })
+
     document.getElementById('message').innerHTML = htmlToRender;
-})
+    })
+    
 
 function validateEmail(email) {
     const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/

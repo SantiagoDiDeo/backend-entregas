@@ -1,39 +1,35 @@
-const { Router } = require( 'express' );
 const express = require( 'express' );
-const app = express();
+const {products} = require('../class/prodClass')
 
-const ProductClass = require('../class/prodClass')
-const products = new ProductClass('./data/products.txt')
+const { Router } = express;
 
-const productsRouter = Router();
+const prodRouter = Router();
 
 //get all products
-productsRouter.get('/', async ( req, res ) => {
+prodRouter.get('/', async ( req, res ) => {
     const allProducts = await products.getArray();
-    console.log(allProducts)
-    res.json( allProducts);
+    res.json(allProducts);
 });
 
 //get products by id
-productsRouter.get('/:id', async ( req, res ) => {
+prodRouter.get('/:id', async ( req, res ) => {
     let id = req.params.id;
     let productsId = products.find( item => item.id == id );
     const product = await products.getById(id)
-    if( !productsId ) res.status(400).send({ error : 'producto no encontrado' });
-
-    res.json({ product });
+    product ? res.json( product )
+    : res.status(404).send({ error: 'producto no encontrado'})  
 
 });
 
 //post product
-productsRouter.post('/productos', async (req, res) => {
-    const productToAdd = req.body
-    await products.save( productToAdd )
+prodRouter.post('/productos', async (req, res) => {
+    const productToAdd = await req.body
+    await products.save(productToAdd)
     res.redirect('/')
   })
 
 //update product
-productsRouter.put('/:id', ( req, res ) => {
+prodRouter.put('/:id', ( req, res ) => {
     const id = req.params;
     const  replace  = req.body;
 
@@ -47,7 +43,7 @@ productsRouter.put('/:id', ( req, res ) => {
 });
 
 //delete product
-productsRouter.delete('/:id', ( req, res ) => {
+prodRouter.delete('/:id', ( req, res ) => {
     const { id } = req.params;
 
     const index = id - 1;
@@ -57,4 +53,4 @@ productsRouter.delete('/:id', ( req, res ) => {
     res.json({ products });
 });
 
-module.exports = productsRouter;
+module.exports = prodRouter;

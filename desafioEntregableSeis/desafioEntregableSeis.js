@@ -15,14 +15,13 @@ Los mensajes deben persistir en el servidor en un archivo (ver segundo entregabl
 */
 
 
+
 const express = require( 'express' );
 const { engine } = require('express-handlebars');
 const prodRouter = require('./routes/prodRouter');
 
 
-const {products} = require('./class/prodClass')
-// const ProductClass = require('./class/prodClass');
-// const products = new ProductClass('./data/products.txt');
+const {products, chat} = require('./class/prodClass')
 
 const app = express();
 const httpServer = require('http').createServer(app);
@@ -35,33 +34,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/public', express.static(__dirname + '/public'));
 
-/* let products = [{
-  title: "Zanahoria",
-  price: 35,
-  thumbnail: "https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png"
-},
-{
-  title: "Zanahoria",
-  price: 35,
-  thumbnail: "https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png"
-}
-]; */
-
-let chat = [{
-  email: 'hola@hola.com',
-  message: 'hola!',
-  date: new Date().toLocaleDateString()
-},
-{
-  email: 'hola@hola.com',
-  message: 'hola!',
-  date: new Date().toLocaleDateString()
-}
-];
-
 
 //HANDLEBARS
-app.set('views', './views/hbs');
+app.set('views', './views/hbs/partials');
 app.set("view engine", "handlebars");
 app.engine("handlebars", engine({
   extname: '.hbs',
@@ -73,26 +48,33 @@ app.engine("handlebars", engine({
 
 app.get('/', async (req, res) => {
     res.render('form', {product: products, productExist: true});
-
   });
 
 //socket
-io.on('connection', (socket) => {
+io.on('connection', async socket => {
   console.log(`New connection id: ${socket.id}`);
-  socket.emit('products', products)
-  socket.emit('chat', chat)
 
-  socket.on('newMessage', (msg) => {
-    chat.push(msg);
-    io.sockets.emit('chat', chat)
-
-  });
+//tabla productos
+  socket.emit('products', await products.getArray())
   
+
+// nuevo producto
   socket.on('newProduct', async (product) => {
-    products.push(product);
+    products.save(product);
     await io.sockets.emit('products', products)
 
   });
+
+  //tabla chat
+  socket.emit('chat', await chat.getArray())
+  
+  //nuevo chat
+  socket.on('newMessage', async msg => {
+    chat.save(msg);
+    io.sockets.emit('chat', await chat.getArray())
+  });
+  
+  
 
 
 })

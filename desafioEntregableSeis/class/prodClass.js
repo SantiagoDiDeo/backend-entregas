@@ -59,4 +59,7 @@ class Contenedor {
     
     };
 
-module.exports = Contenedor;
+const products = new Contenedor('./data/products.txt')
+const chat = new Contenedor('./data/chat.txt')
+
+module.exports = {products, chat};
