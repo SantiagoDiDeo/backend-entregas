@@ -23,6 +23,11 @@
     "title": "Botas",
     "price": "6000",
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png"
+  },
+  {
+    "title": "buzon",
+    "price": "1200",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/feather-5/24/download-64.png",
+    "id": null
   }
-  ]
-  
+]

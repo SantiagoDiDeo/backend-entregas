@@ -4,18 +4,23 @@ socket.on('connect', () => {
     console.log('connected')
 });
 //agregar nuevo producto
-// const formulario = document.getElementById('form')
+const formulario = document.getElementById('form')
 
-//     formulario.addEventListener('submit',  (e) => {
-//         e.preventDefault()
-//         const product = {
-//             title: formulario[0].value,
-//             price: formulario[1].value,
-//             thumbnail: formulario[2].value
-//         }
-//          socket.emit('newProduct', product)
+const formAddE = async () => {
+
+    let formulario = await formulario.addEventListener('submit',  e => {
+        e.preventDefault()
+        const product = {
+            "title": title.value,
+            "price": price.value,
+            "thumbnail": thumbnail.value
+        }
+         socket.emit('newProduct', product)
         
-//         })
+        })
+
+}
+
 
 
 
