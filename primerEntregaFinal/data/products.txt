@@ -1,0 +1,42 @@
+[
+  {
+    "id": "86e354af-1a45-483b-8cea-8cbae528f5c6",
+    "timestamp": "10/1/2023 09:53:35",
+    "title": "Manzana",
+    "description": "Manzana verde",
+    "code": "100",
+    "price": "50",
+    "stock": "20",
+    "thumbnail": "https://cdn4.iconfinder.com/data/icons/fruits-79/48/19-green_apple-256.png"
+  },
+  {
+    "id": "eb170c11-533c-449c-a315-dac783ebbaa0",
+    "timestamp": "10/1/2023 15:36:30",
+    "title": "Frutillas",
+    "description": "f",
+    "code": "102",
+    "price": "100",
+    "stock": "60",
+    "thumbnail": "https://cdn4.iconfinder.com/data/icons/fruits-79/48/02-Strawberry-256.png"
+  },
+  {
+    "id": "14b82ed0-b4ac-45b9-a5e9-c86898b74c68",
+    "timestamp": "10/1/2023 15:37:43",
+    "title": "Limon",
+    "description": "Limon para jugo",
+    "code": "101",
+    "price": "40",
+    "stock": "20",
+    "thumbnail": "https://cdn4.iconfinder.com/data/icons/fruits-79/48/16-lemon-256.png"
+  },
+  {
+    "id": "77c1f01f-7f30-4d4b-b096-b79a911fea7b",
+    "timestamp": "10/1/2023 15:38:26",
+    "title": "kiwi",
+    "description": "Kiwi de estacion",
+    "code": "103",
+    "price": "80",
+    "stock": "10",
+    "thumbnail": "https://cdn4.iconfinder.com/data/icons/fruits-79/48/21-kiwi-256.png"
+  }
+]
