@@ -58,8 +58,9 @@ class Contanier {
     async addCart( cartId ) { 
       const carts = await this.getArray();
       try{
-          const newCart = { timestamp:new Date().toLocaleString(), id: cartId };     
+          const newCart = [{ ...carts, timestamp:new Date().toLocaleString(), id: cartId,  }];     
           await this.saveFile( carts );
+
           carts.push({newCart});
           return;
       } catch(err) {

@@ -37,8 +37,8 @@ io.on('connection', async socket => {
 
 
 app.set('views', path.resolve(__dirname, '. /public'));
-app.use('/api/productos', productRouter);
-app.use('/api/carrito', cartRouter);
+app.use('/api', productRouter);
+app.use('/api', cartRouter);
 
 const PORT = 8080;
 const server = httpServer.listen(PORT, () => {
