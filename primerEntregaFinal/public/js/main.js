@@ -72,7 +72,7 @@ document.getElementById("newCartBtn").addEventListener("click", ev => {
   })
     .then((response) => response.text())
     .then((text) => {
-      alert('Se ha creadosu carrito. Copie su id para operar: ' + text);
+      alert('Se ha creado su carrito. Copie su id para operar: ' + text);
       socket.emit('newCart');
     });
 });
