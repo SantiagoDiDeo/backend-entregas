@@ -14,7 +14,6 @@ prodRouter.get('/', async ( req, res ) => {
 //get products by id
 prodRouter.get('/:id', async ( req, res ) => {
     let id = req.params.id;
-    let productsId = products.find( item => item.id == id );
     const product = await products.getById(id)
     product ? res.json( product )
     : res.status(404).send({ error: 'producto no encontrado'})  
@@ -24,33 +23,34 @@ prodRouter.get('/:id', async ( req, res ) => {
 //post product
 prodRouter.post('/productos', async (req, res) => {
     const productToAdd = await req.body
-    await products.save(productToAdd)
+    await products.addProduct(productToAdd)
     res.redirect('/')
   })
 
 //update product
-prodRouter.put('/:id', ( req, res ) => {
-    const id = req.params;
+prodRouter.put('/:id', async ( req, res ) => {
+    const id = req.params.id;
     const  replace  = req.body;
 
     const index = id - 1;
 
-    products[index] = replace;
-    
-    products.save(replace);
-     res.status(200).json({replace});
+    if(await products.adjustById( id, productToModify )){
+        res.send({ message: 'producto modificado'})
+      } else {
+        res.status(404).send({ error: 'producto no encontrado'})
+      }
     
 });
 
 //delete product
-prodRouter.delete('/:id', ( req, res ) => {
+prodRouter.delete('/:id', async ( req, res ) => {
     const { id } = req.params;
 
-    const index = id - 1;
-
-     products.splice( index , 1 );
-
-    res.json({ products });
+    if (await products.delById(id)) {
+        res.send({ message: 'producto borrado'})
+      } else {
+        res.status(404).send({ error: 'producto no encontrado'})
+      }
 });
 
 module.exports = prodRouter;

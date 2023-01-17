@@ -11,7 +11,7 @@ const mariaDb = knex({
 
   const sqlite3 = knex({
     client: 'sqlite3',
-    connection: {filename: 'ecommerce.sqlite'},
+    connection: {filename: './sqlite3/ecommerce.sqlite'},
     useNullAsDefault: true
   });
 

@@ -60,7 +60,7 @@ io.on('connection', async socket => {
 
 // nuevo producto
   socket.on('newProduct', async (product) => {
-    products.save(product);
+    products.addProduct(product);
     await io.sockets.emit('products', products)
 
   });
@@ -70,7 +70,7 @@ io.on('connection', async socket => {
   
   //nuevo chat
   socket.on('newMessage', async msg => {
-    chat.save(msg);
+    chat.addProduct(msg);
     io.sockets.emit('chat', await chat.getArray())
   });
   

@@ -57,10 +57,10 @@ socket.on('products',  (data) => {
 
 
 //chat
-socket.on('chat', (data) => {
+socket.on('chat', async (data) => {
     chat = data;    
     htmlToRender = '';
-    chat.forEach((element) => {
+    await chat.forEach((element) => {
 
         htmlToRender = htmlToRender + `
         <tr>

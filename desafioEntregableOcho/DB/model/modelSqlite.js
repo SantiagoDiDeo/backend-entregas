@@ -1,4 +1,4 @@
-const { sqlite3 } = require('../config/conectToDb')
+const { sqlite3 } = require('../config/connectToDb')
 
 const createTableSqlite = async () => {
   try {
