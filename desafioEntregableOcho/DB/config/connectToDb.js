@@ -5,13 +5,14 @@ const mariaDb = knex({
     connection: {
       host : '127.0.0.1',
       user : 'root',
+      password : 'password',
       database : 'ecommerce'
     }
   });
 
   const sqlite3 = knex({
     client: 'sqlite3',
-    connection: {filename: './sqlite3/ecommerce.sqlite'},
+    connection: {filename: '/absolutepath/db.sqlite'},
     useNullAsDefault: true
   });
 
