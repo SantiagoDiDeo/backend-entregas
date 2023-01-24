@@ -1,0 +1,865 @@
+>> Consigna: Utilizando Mongo Shell, crear una base de datos llamada ecommerce que contenga dos colecciones: mensajes y productos.
+
+--1) (lineas: 43-330 )  Agregar 10 documentos con valores distintos a las colecciones mensajes y productos. El formato de los documentos debe estar en correspondencia con el que venimos utilizando en el entregable con base de datos MariaDB. 
+
+--2) (lineas: 332-446 )  Definir las claves de los documentos en relación a los campos de las tablas de esa base. En el caso de los productos, poner valores al campo precio entre los 100 y 5000 pesos(eligiendo valores intermedios, ej: 120, 580, 900, 1280, 1700, 2300, 2860, 3350, 4320, 4990). 
+
+--3)Listar todos los documentos en cada colección.
+
+--4) (lineas: 448-452 ) Mostrar la cantidad de documentos almacenados en cada una de ellas. 
+
+5)Realizar un CRUD sobre la colección de productos:
+        (lineas: 455-533 ) -Agregar un producto más en la colección de productos 
+        (lineas: 536-545 ) -Realizar una consulta por nombre de producto específico. 
+        (lineas: 547-562)  -Listar los productos con precio menor a 1000 pesos. 
+        (lineas: 564-585)  -Listar los productos con precio entre los 1000 a 3000 pesos. 
+        (lineas:587-602)   -Listar los productos con precio mayor a 3000 pesos. 
+        (lineas:604-622)   -Realizar una consulta que traiga sólo el nombre del tercer producto más barato. 
+        (lineas:624-712)   -Hacer una actualización sobre todos los productos, agregando el campo stock a todos ellos con un valor de 100. 
+        (lineas:714-802)   -Cambiar el stock a cero de los productos con precios mayores a 4000 pesos.  
+        (lineas:804-858)   -Borrar los productos con precio menor a 1000 pesos 
+
+6)Crear un usuario 'pepe' clave: 'asd456' que sólo pueda leer la base de datos ecommerce. Verificar que pepe no pueda cambiar la información.
+
+-------------------------------------------------------------------------------------------------------------
+
+mongosh> show dbs
+admin      40.00 KiB
+config     84.00 KiB
+empresa   112.00 KiB
+local      40.00 KiB
+worldCup   40.00 KiB
+
+mongosh> use ecommerce
+switched to db ecommerce
+
+ecommerce> show dbs
+admin      40.00 KiB
+config     84.00 KiB
+empresa   112.00 KiB
+local      40.00 KiB
+worldCup   40.00 KiB
+
+ecommerce> let messagesToAdd = [
+...         {
+...         "email": "mario@mail.com",
+...         "message": "Hola, como estas? necesitaria asistencia con el servicio",
+...         "date": "23/12/2022 19:45:26",
+...         "id": 1
+...         },
+...         {
+...         "email": "toro@mail.com",
+...         "message": "Hola muy bien!! Si, enviame tu numero de cliente y te ayudamos!",
+...         "date": "23/12/2022 19:46:28",
+...         "id": 2
+...         },
+...         {
+...         "email": "mario@mail.com",
+...         "message": "Mi numero de cliente es 7468468.",
+...         "date": "31/12/2022",
+...         "id": 3
+...         },
+...         {
+...         "email": "toro@mail.com",
+...         "message": "Perfecto Mario, comentame, que inconveniente tuviste?",
+...         "date": "31/12/2022",
+...         "id": 4
+...         },
+...         {
+...         "email": "mario@mail.com",
+...         "message": "Estoy con el servicio caido hace varias horas ya, y con perdidas de señal eventuales",
+...         "date": "31/12/2022",
+...         "id": 5
+...         },
+...         {
+...         "email": "toro@mail.com",
+...         "message": "Te comento, se estan realizando reparaciones de antenas en tu zona de residencia, por lo tanto el servicio esta caido hasta las 14:hs",
+...         "date": "31/12/2022",
+...         "id": 6
+...         },
+...         {
+...         "email": "toro@mail.com",
+...         "message": "Con respecto a la señal debil, es porque tenes un paquete de servicio basico, por lo tanto se auto-regula para que no te quedes sin señal el resto del mes. Te recomiendo cambiar el plan para una mejor señal",
+...         "date": "31/12/2022",
+...         "id": 7
+...         },
+...         {
+...         "email": "mario@mail.com",
+...         "message": "Okay, esperare a que el servicio vuelva.",
+...         "date": "31/12/2022",
+...         "id": 8
+...         },
+...         {
+...         "email": "mario@mail.com",
+...         "message": "Y con el plan, por el momento no puedo pagar uno mejor.",
+...         "date": "31/12/2022",
+...         "id": 9
+...         },
+...         {
+...         "email": "mario@mail.com",
+...         "message": "muchas gracias, saludos!",
+...         "date": "31/12/2022",
+...         "id": 10
+...         }
+ecommerce>
+
+ecommerce> db.messages.insertMany(messagesToAdd)
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63cd8d16e3c9fe9001de0669"),
+    '1': ObjectId("63cd8d16e3c9fe9001de066a"),
+    '2': ObjectId("63cd8d16e3c9fe9001de066b"),
+    '3': ObjectId("63cd8d16e3c9fe9001de066c"),
+    '4': ObjectId("63cd8d16e3c9fe9001de066d"),
+    '5': ObjectId("63cd8d16e3c9fe9001de066e"),
+    '6': ObjectId("63cd8d16e3c9fe9001de066f"),
+    '7': ObjectId("63cd8d16e3c9fe9001de0670"),
+    '8': ObjectId("63cd8d16e3c9fe9001de0671"),
+
+ecommerce> show collections
+messagese    8.00 KiB
+
+ecommerce> db.messages.find({}).pretty()
+[
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de0669"),
+    email: 'mario@mail.com',
+    message: 'Hola, como estas? necesitaria asistencia con el servicio',
+    date: '23/12/2022 19:45:26',
+    id: 1
+  },
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de066a"),
+    email: 'toro@mail.com',
+    message: 'Hola muy bien!! Si, enviame tu numero de cliente y te ayudamos!',
+    date: '23/12/2022 19:46:28',
+    id: 2
+  },
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de066b"),
+    email: 'mario@mail.com',
+    message: 'Mi numero de cliente es 7468468.',
+    date: '31/12/2022',
+    id: 3
+  },
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de066c"),
+    email: 'toro@mail.com',
+    message: 'Perfecto Mario, comentame, que inconveniente tuviste?',
+    date: '31/12/2022',
+    id: 4
+  },
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de066d"),
+    email: 'mario@mail.com',
+    message: 'Estoy con el servicio caido hace varias horas ya, y con perdidas de señal eventuales',
+    date: '31/12/2022',
+    id: 5
+  },
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de066e"),
+    email: 'toro@mail.com',
+    message: 'Te comento, se estan realizando reparaciones de antenas en tu zona de residencia, por lo tanto el servicio esta caido hasta las 14:hs',
+    date: '31/12/2022',
+    id: 6
+  },
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de066f"),
+    email: 'toro@mail.com',
+    message: 'Con respecto a la señal debil, es porque tenes un paquete de servicio basico, por lo tanto se auto-regula para que no te quedes sin señal el resto del mes. Te recomiendo cambiar el plan para una mejor señal',
+    date: '31/12/2022',
+    id: 7
+  },
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de0670"),
+    email: 'mario@mail.com',
+    message: 'Okay, esperare a que el servicio vuelva.',
+    date: '31/12/2022',
+    id: 8
+  },
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de0671"),
+    email: 'mario@mail.com',
+    message: 'Y con el plan, por el momento no puedo pagar uno mejor.',
+    date: '31/12/2022',
+    id: 9
+  },
+  {
+    _id: ObjectId("63cd8d16e3c9fe9001de0672"),
+    email: 'mario@mail.com',
+    message: 'muchas gracias, saludos!',
+    date: '31/12/2022',
+    id: 10
+  }
+]
+
+
+ecommerce> let productsToAdd = [
+...   {
+...     "title": "Zanahoria",
+...     "price": "35",
+...     "thumbnail": "https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png"
+...   },
+...   {
+...     "title": "Mixer",
+...     "price": "3500",
+...     "thumbnail": "https://cdn2.iconfinder.com/data/icons/cooking-56/64/24-electric_appliances-electric_mixer-kitchenware-kitchen_pack-mix-mixer-blender-cooking-512.png"
+...   },
+...   {
+...     "title": "Manzana",
+...     "price": "40",
+...     "thumbnail": "https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-512.png"
+...   },
+...   {
+...     "title": "Guantes",
+...     "price": "500",
+...     "thumbnail": "https://cdn3.iconfinder.com/data/icons/clothes-126/64/12-glovegloveautumnfashionglovesaccesories-512.png"
+...   },
+...   {
+...     "title": "Botas",
+...     "price": "6000",
+...     "thumbnail": "https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png"
+...   },
+...   {
+...     "title": "buzon",
+...     "price": "1200",
+...     "thumbnail": "https://cdn3.iconfinder.com/data/icons/feather-5/24/download-64.png",
+...   },
+...   {
+...     "title": "anteojos",
+...     "price": "12000",
+...     "thumbnail": "https://cdn3.iconfinder.com/data/icons/ui-10/512/eyeglasses-512.png",
+...   },
+...   {
+...     "title": "lupa",
+...     "price": "700",
+...     "thumbnail": "https://cdn0.iconfinder.com/data/icons/startup-17/32/startup-45-256.png",
+...   },
+...   {
+...     "title": "libro",
+...     "price": "1500",
+...     "thumbnail": "https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-3/256/111-256.png",
+...   },
+...   {
+...     "title": "ipod",
+...     "price": "5500",
+...     "thumbnail": "https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-13-256.png",
+...   },
+... ]
+
+ecommerce> db.products.insertMany(productsToAdd)
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63cd8f52e3c9fe9001de0673"),
+    '1': ObjectId("63cd8f52e3c9fe9001de0674"),
+    '2': ObjectId("63cd8f52e3c9fe9001de0675"),
+    '3': ObjectId("63cd8f52e3c9fe9001de0676"),
+    '4': ObjectId("63cd8f52e3c9fe9001de0677"),
+    '5': ObjectId("63cd8f52e3c9fe9001de0678"),
+    '6': ObjectId("63cd8f52e3c9fe9001de0679"),
+    '7': ObjectId("63cd8f52e3c9fe9001de067a"),
+    '8': ObjectId("63cd8f52e3c9fe9001de067b"),
+    '9': ObjectId("63cd8f52e3c9fe9001de067c")
+  }
+}
+ecommerce> db.products.find({}).pretty()
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0673"),
+    title: 'Zanahoria',
+    price: '35',
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0674"),
+    title: 'Mixer',
+    price: '3500',
+    thumbnail: 'https://cdn2.iconfinder.com/data/icons/cooking-56/64/24-electric_appliances-electric_mixer-kitchenware-kitchen_pack-mix-mixer-blender-cooking-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0675"),
+    title: 'Manzana',
+    price: '40',
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0676"),
+    title: 'Guantes',
+    price: '500',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/12-glovegloveautumnfashionglovesaccesories-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0677"),
+    title: 'Botas',
+    price: '6000',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0678"),
+    title: 'buzon',
+    price: '1200',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/feather-5/24/download-64.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0679"),
+    title: 'anteojos',
+    price: '12000',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/ui-10/512/eyeglasses-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067a"),
+    title: 'lupa',
+    price: '700',
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/startup-17/32/startup-45-256.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067b"),
+    title: 'libro',
+    price: '1500',
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-3/256/111-256.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067c"),
+    title: 'ipod',
+    price: '5500',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-13-256.png'
+  }
+]
+ecommerce>  
+
+ecommerce> db.products.updateOne({_id: ObjectId("63cd8f52e3c9fe9001de0673")}, {$set: {price: 110}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+ecommerce> db.products.updateOne({_id: ObjectId("63cd8f52e3c9fe9001de0675")}, {$set: {price: 140}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+ecommerce> db.products.updateOne({_id: ObjectId("63cd8f52e3c9fe9001de0677")}, {$set: {price: 3400}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+ecommerce> db.products.updateOne({_id: ObjectId("63cd8f52e3c9fe9001de0679")}, {$set: {price: 4900}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+ecommerce> db.products.updateOne({_id: ObjectId("63cd8f52e3c9fe9001de067c")}, {$set: {price: 4700}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+ecommerce> db.products.updateOne({_id: ObjectId("63cd8f52e3c9fe9001de067c")}, {$set: {price: '4700'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+ecommerce> db.products.find({}).pretty()
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0673"),
+    title: 'Zanahoria',
+    price: 110,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0674"),
+    title: 'Mixer',
+    price: '3500',
+    thumbnail: 'https://cdn2.iconfinder.com/data/icons/cooking-56/64/24-electric_appliances-electric_mixer-kitchenware-kitchen_pack-mix-mixer-blender-cooking-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0675"),
+    title: 'Manzana',
+    price: 140,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0676"),
+    title: 'Guantes',
+    price: '500',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/12-glovegloveautumnfashionglovesaccesories-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0677"),
+    title: 'Botas',
+    price: 3400,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0678"),
+    title: 'buzon',
+    price: '1200',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/feather-5/24/download-64.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0679"),
+    title: 'anteojos',
+    price: 4900,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/ui-10/512/eyeglasses-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067a"),
+    title: 'lupa',
+    price: '700',
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/startup-17/32/startup-45-256.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067b"),
+    title: 'libro',
+    price: '1500',
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-3/256/111-256.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067c"),
+    title: 'ipod',
+    price: '4700',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-13-256.png'
+  }
+]
+ecommerce>
+
+ecommerce> db.products.estimatedDocumentCount()
+10
+ecommerce> db.messages.estimatedDocumentCount()
+10
+ecommerce>              
+
+
+ecommerce> db.products.insertOne({
+...         title: 'reloj de arena',
+...         price: 2000,
+...         thumbnail: 'https://cdn0.iconfinder.com/data/icons/interface-10/128/_Hourglass-256.png'
+...         })
+{
+  acknowledged: true,
+  insertedId: ObjectId("63cd97ffe3c9fe9001de067d")
+}
+ecommerce> db.products.find({}).pretty()
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0673"),
+    title: 'Zanahoria',
+    price: 110,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0674"),
+    title: 'Mixer',
+    price: '3500',
+    thumbnail: 'https://cdn2.iconfinder.com/data/icons/cooking-56/64/24-electric_appliances-electric_mixer-kitchenware-kitchen_pack-mix-mixer-blender-cooking-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0675"),
+    title: 'Manzana',
+    price: 140,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0676"),
+    title: 'Guantes',
+    price: '500',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/12-glovegloveautumnfashionglovesaccesories-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0677"),
+    title: 'Botas',
+    price: 3400,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0678"),
+    title: 'buzon',
+    price: '1200',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/feather-5/24/download-64.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0679"),
+    title: 'anteojos',
+    price: 4900,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/ui-10/512/eyeglasses-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067a"),
+    title: 'lupa',
+    price: '700',
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/startup-17/32/startup-45-256.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067b"),
+    title: 'libro',
+    price: '1500',
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-3/256/111-256.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067c"),
+    title: 'ipod',
+    price: '4700',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-13-256.png'
+  },
+  {
+    _id: ObjectId("63cd97ffe3c9fe9001de067d"),
+    title: 'reloj de arena',
+    price: 2000,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/interface-10/128/_Hourglass-256.png'
+  }
+]
+ecommerce>   
+
+
+ecommerce> db.products.find({"title": { $eq: 'ipod'}})
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067c"),
+    title: 'ipod',
+    price: '4700',
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-13-256.png'
+  }
+]
+ecommerce>
+
+ecommerce> db.products.find( {price: {$lt: 1000} } )
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0673"),
+    title: 'Zanahoria',
+    price: 110,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0675"),
+    title: 'Manzana',
+    price: 140,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-512.png'
+  }
+]
+ecommerce>                                  
+
+ecommerce> db.products.find({ $or: [{price: {$lt: 3000}}, {price: {gt: 1000}}]})
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0673"),
+    title: 'Zanahoria',
+    price: 110,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0675"),
+    title: 'Manzana',
+    price: 140,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-512.png'
+  },
+  {
+    _id: ObjectId("63cd97ffe3c9fe9001de067d"),
+    title: 'reloj de arena',
+    price: 2000,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/interface-10/128/_Hourglass-256.png'
+  }
+]
+ecommerce>                                
+
+ecommerce> db.products.find({price: {$gte: 3000}})
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0677"),
+    title: 'Botas',
+    price: 3400,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png'
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0679"),
+    title: 'anteojos',
+    price: 4900,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/ui-10/512/eyeglasses-512.png'
+  }
+]
+ecommerce>            
+
+ecommerce> db.products.find({}, {price: 1,title: 1, _id: 0}).sort({price: 1})
+[
+  { title: 'Zanahoria', price: 110 },
+  { title: 'Manzana', price: 140 },
+  { title: 'Guantes', price: 500 },
+  { title: 'lupa', price: 700 },
+  { title: 'buzon', price: 1200 },
+  { title: 'libro', price: 1500 },
+  { title: 'reloj de arena', price: 2000 },
+  { title: 'Botas', price: 3400 },
+  { title: 'Mixer', price: 3500 },
+  { title: 'ipod', price: 4700 },
+  { title: 'anteojos', price: 4900 }
+]
+ecommerce>                                
+
+ecommerce> db.products.find({}, {price: 1,title: 1, _id: 0}).sort({price: 1}).skip(2).limit(1)
+[ { title: 'Guantes', price: 500 } ]
+ecommerce> 
+
+ecommerce> db.products.updateMany({}, {$set: {stock: 100}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 11,
+  modifiedCount: 10,
+  upsertedCount: 0
+}
+ecommerce> db.products.find({}).pretty()
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0673"),
+    title: 'Zanahoria',
+    price: 110,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0674"),
+    title: 'Mixer',
+    price: 3500,
+    thumbnail: 'https://cdn2.iconfinder.com/data/icons/cooking-56/64/24-electric_appliances-electric_mixer-kitchenware-kitchen_pack-mix-mixer-blender-cooking-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0675"),
+    title: 'Manzana',
+    price: 140,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0676"),
+    title: 'Guantes',
+    price: 500,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/12-glovegloveautumnfashionglovesaccesories-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0677"),
+    title: 'Botas',
+    price: 3400,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0678"),
+    title: 'buzon',
+    price: 1200,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/feather-5/24/download-64.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0679"),
+    title: 'anteojos',
+    price: 4900,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/ui-10/512/eyeglasses-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067a"),
+    title: 'lupa',
+    price: 700,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/startup-17/32/startup-45-256.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067b"),
+    title: 'libro',
+    price: 1500,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-3/256/111-256.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067c"),
+    title: 'ipod',
+    price: 4700,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-13-256.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd97ffe3c9fe9001de067d"),
+    title: 'reloj de arena',
+    price: 2000,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/interface-10/128/_Hourglass-256.png',
+    stock: 100
+  }
+]
+ecommerce>                      
+
+ecommerce> db.products.updateMany({price: {$gt: 4000}},{$set: {stock: 0}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+ecommerce> db.products.find({}).pretty()
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0673"),
+    title: 'Zanahoria',
+    price: 110,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/vegetables-58/48/11-carrot-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0674"),
+    title: 'Mixer',
+    price: 3500,
+    thumbnail: 'https://cdn2.iconfinder.com/data/icons/cooking-56/64/24-electric_appliances-electric_mixer-kitchenware-kitchen_pack-mix-mixer-blender-cooking-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0675"),
+    title: 'Manzana',
+    price: 140,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0676"),
+    title: 'Guantes',
+    price: 500,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/12-glovegloveautumnfashionglovesaccesories-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0677"),
+    title: 'Botas',
+    price: 3400,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0678"),
+    title: 'buzon',
+    price: 1200,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/feather-5/24/download-64.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0679"),
+    title: 'anteojos',
+    price: 4900,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/ui-10/512/eyeglasses-512.png',
+    stock: 0
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067a"),
+    title: 'lupa',
+    price: 700,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/startup-17/32/startup-45-256.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067b"),
+    title: 'libro',
+    price: 1500,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-3/256/111-256.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067c"),
+    title: 'ipod',
+    price: 4700,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-13-256.png',
+    stock: 0
+  },
+  {
+    _id: ObjectId("63cd97ffe3c9fe9001de067d"),
+    title: 'reloj de arena',
+    price: 2000,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/interface-10/128/_Hourglass-256.png',
+    stock: 100
+  }
+]
+ecommerce>            
+
+ecommerce> db.products.deleteMany({price: {$lt: 1000}})
+{ acknowledged: true, deletedCount: 4 }
+ecommerce> db.products.find({}).pretty()
+[
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0674"),
+    title: 'Mixer',
+    price: 3500,
+    thumbnail: 'https://cdn2.iconfinder.com/data/icons/cooking-56/64/24-electric_appliances-electric_mixer-kitchenware-kitchen_pack-mix-mixer-blender-cooking-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0677"),
+    title: 'Botas',
+    price: 3400,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/clothes-126/64/02-rainbootsfootwearbootrainingrainy-512.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0678"),
+    title: 'buzon',
+    price: 1200,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/feather-5/24/download-64.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de0679"),
+    title: 'anteojos',
+    price: 4900,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/ui-10/512/eyeglasses-512.png',
+    stock: 0
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067b"),
+    title: 'libro',
+    price: 1500,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-3/256/111-256.png',
+    stock: 100
+  },
+  {
+    _id: ObjectId("63cd8f52e3c9fe9001de067c"),
+    title: 'ipod',
+    price: 4700,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-13-256.png',
+    stock: 0
+  },
+  {
+    _id: ObjectId("63cd97ffe3c9fe9001de067d"),
+    title: 'reloj de arena',
+    price: 2000,
+    thumbnail: 'https://cdn0.iconfinder.com/data/icons/interface-10/128/_Hourglass-256.png',
+    stock: 100
+  }
+]
+ecommerce>                      
+
+ecommerce>  use admin
+switched to db admin
+admin> db.createUser({user: 'pepe', pwd: 'asd456', roles: [{role: 'read', db: 'ecommerce'}]})
+{ok: 1}
+
+admin>
