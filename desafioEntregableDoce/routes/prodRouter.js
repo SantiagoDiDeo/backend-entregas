@@ -1,11 +1,21 @@
 const express = require( 'express' );
 const {products} = require('../class/prodClass')
+const connectToDb = require('../DB/config/connectToDb')
 const { faker } = require('@faker-js/faker');
 const { mockProducts } = require('../class/mockClass');
 faker.locate = 'es';
 const { Router } = express;
-
+const session = require('express-session')
+const passport = require('passport')
+require('../DB/config/auth')
 const prodRouter = Router();
+
+prodRouter.use(passport.initialize())
+prodRouter.use(passport.session())
+
+let users = [];
+
+
 
 //get all products
 prodRouter.get('/', async ( req, res ) => {
@@ -25,7 +35,7 @@ prodRouter.get('/:id', async ( req, res ) => {
 //post product
 prodRouter.post('/productos', async (req, res) => {
     const productToAdd = await req.body
-    await products.addProduct(productToAdd)
+    await products.add(productToAdd)
     res.redirect('/')
   })
 
@@ -59,6 +69,64 @@ prodRouter.get('/productos-test', (req, res) => {
   const products = mockProducts.getArray();
   console.log(products)
   res.json(products);
+})
+
+
+
+
+
+
+prodRouter.post('/signup', 
+passport.authenticate('signup', {failureMessage: 'fallo el registro', failureRedirect: '/'}),
+ (req, res) => {
+  const {username, password} = req.body;
+
+    const existentUser = users.find(user => user.username)
+    if (existentUser) {
+        res.status(403).send('el usuario ya existe')
+        return
+    } else {
+
+      users.push(... users,  {username, password});
+      
+      req.session.username = username;
+
+      res.send(`hola ${req.session.username}! bienvenido!! `)
+      
+
+    }
+})
+
+prodRouter.post('/login',
+passport.authenticate('login', {failureMessage: 'failure authentication', failureRedirect: '/'}),
+async (req, res) => {
+  const {username, password} = req.body;
+
+   req.session.username = username
+
+   req.session.counter = (req.session.counter ?? 0) + 1;
+
+   const existentUser = users.find(user => user.username)
+
+if(!existentUser) {
+
+  res.status(403).send('el usuario no existe')
+  return;
+} else {
+  res.send(`hola ${req.session.username}! bienvenido!! has entrado ${req.session.counter} veces`)
+  
+}
+
+})
+
+
+prodRouter.get('/logout', async (req,res) => {
+
+
+     req.session.destroy(  () => {
+       res.send(`Hasta luego ${req.session.username}`)
+    })
+    res.redirect('/')
 })
 
 module.exports = prodRouter;

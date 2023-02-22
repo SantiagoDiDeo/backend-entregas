@@ -1,5 +1,11 @@
 const socket = io.connect();
 
+const myButton = document.getElementById('myButton');
+myButton.addEventListener('click', () => {
+  window.location.href = '/logout';
+
+});
+
 socket.on('connect', () => {
     console.log('connected')
 });
@@ -59,9 +65,9 @@ socket.on('products',  (data) => {
 
 //chat
 socket.on('chat', async (data) => {
-    chat = data;    
+        
     htmlToRender = '';
-    await chat.forEach((element) => {
+    await data.forEach((element) => {
 
         htmlToRender = htmlToRender + `
         <tr>
@@ -85,25 +91,27 @@ function validateEmail(email) {
       return false
     }
   }
-
-let addMessage = (addMessage) => {
-let messageToAdd = {
-  author: {
-    id: userEmail.value,
-    name: userName.value,
-    surname: userSurname.value,
-    age: userAge.value,
-    nickname: userNickname.value,
-    avatar: userAvatar.value
-  },
-  text: userMensaje.value
- }
-
- userMensaje.value = '';
+  
+  
+  const addMessage = async (addMessage) => {
+ 
+    let messageToAdd =  {
+      author: {
+        id: userEmail.value,
+        name: userName.value,
+        surname: userSurname.value,
+        age: userAge.value,
+        nickname: userNickname.value,
+        avatar: userAvatar.value
+      },
+      text: userMensaje.value
+    }
+    
+    userMensaje.value = '';
 
 
 if(validateEmail(email.value)) {
 
-    socket.emit('newMessage', messageToAdd)
+   await socket.emit('newMessage', messageToAdd)
 }
 }

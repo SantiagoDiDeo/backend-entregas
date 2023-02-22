@@ -1,4 +1,32 @@
 {{!-- formulario post --}}
+{{!-- signup y login --}}
+<section class='p-4 bg-secondary'>
+  <h2>Signup</h2>
+  <form action="/api/signup" method="post">
+    <div>  
+      <span>name</span>
+      <input type="text" name="username">
+    </div>
+    <div>
+      <span>password</span>
+      <input type="text" name="password">
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  <h2>login</h2>
+  <form action="/api/login" method="post">
+    <div>
+      <span>name</span>
+      <input type="text" name="username">
+    </div>
+    <div>
+      <span>password</span>
+      <input type="text" name="password">
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+    <button id="myButton">Logout</button>
+</section>
 <section class='p-4 bg-secondary'>
 	<h2 class='alert alert-dark text-center'>Ingrese Producto</h2>
 	<form id="form" action='/api/productos' method='POST'>
@@ -56,6 +84,6 @@
         <div id="pictureHelp5" class="form-text">Ingrese url de su avatar (foto, logo)</div>
       </div>
 
-    <input type="text" name="mensaje" id="mensaje" placeholder="Ingrese su mensaje">
+    <input type="text" name="mensaje" id="userMensaje" placeholder="Ingrese su mensaje">
     <button type="button" onclick="addMessage(messageForm)" id="button">Add</button>
 </form>

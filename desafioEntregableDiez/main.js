@@ -20,8 +20,8 @@ const express = require( 'express' );
 const { engine } = require('express-handlebars');
 const prodRouter = require('./routes/prodRouter');
 
-
-const {products, chat} = require('./class/prodClass')
+const {products} = require('./class/prodClass')
+const { chats} = require('./class/chatClass')
 
 const app = express();
 const httpServer = require('http').createServer(app);
@@ -66,12 +66,12 @@ io.on('connection', async socket => {
   });
 
   //tabla chat
-  socket.emit('chat', await chat.getArray())
+  socket.emit('chat', await chats.getArray())
   
   //nuevo chat
   socket.on('newMessage', async msg => {
-    chat.addProduct(msg);
-    io.sockets.emit('chat', await chat.getArray())
+    chats.addProduct(msg);
+    io.sockets.emit('chat', await chats.getArray())
   });
   
   
