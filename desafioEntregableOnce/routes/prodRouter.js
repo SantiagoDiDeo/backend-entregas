@@ -1,12 +1,17 @@
 const express = require( 'express' );
 const {products} = require('../class/prodClass')
+const connectToDb = require('../DB/config/connectToDb')
 const { faker } = require('@faker-js/faker');
 const { mockProducts } = require('../class/mockClass');
 faker.locate = 'es';
 const { Router } = express;
 const session = require('express-session')
-
+const passport = require('passport')
+require('../DB/config/auth')
 const prodRouter = Router();
+
+prodRouter.use(passport.initialize())
+prodRouter.use(passport.session())
 
 let users = [];
 
@@ -71,7 +76,9 @@ prodRouter.get('/productos-test', (req, res) => {
 
 
 
-prodRouter.post('/signup', (req, res) => {
+prodRouter.post('/signup', 
+passport.authenticate('signup', {failureMessage: 'fallo el registro', failureRedirect: '/'}),
+ (req, res) => {
   const {username, password} = req.body;
 
     const existentUser = users.find(user => user.username)
@@ -80,7 +87,7 @@ prodRouter.post('/signup', (req, res) => {
         return
     } else {
 
-      users.push({username, password});
+      users.push(... users,  {username, password});
       
       req.session.username = username;
 
@@ -90,7 +97,9 @@ prodRouter.post('/signup', (req, res) => {
     }
 })
 
-prodRouter.post('/login', async (req, res) => {
+prodRouter.post('/login',
+passport.authenticate('login', {failureMessage: 'failure authentication', failureRedirect: '/'}),
+async (req, res) => {
   const {username, password} = req.body;
 
    req.session.username = username

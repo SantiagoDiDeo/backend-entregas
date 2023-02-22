@@ -2,7 +2,7 @@ const socket = io.connect();
 
 const myButton = document.getElementById('myButton');
 myButton.addEventListener('click', () => {
-  window.location.href = '/api/logout';
+  window.location.href = '/logout';
 
 });
 

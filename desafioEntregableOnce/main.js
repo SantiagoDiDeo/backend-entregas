@@ -10,15 +10,16 @@ const prodRouter = require('./routes/prodRouter');
 const {products} = require('./class/prodClass');
 const { chats} = require('./class/chatClass');
 const connectToDb = require('./DB/config/connectToDb');
-
+const passport = require('passport')
 
 
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use('/public', express.static(__dirname + '/public'));
-app.use(session({connectToDb, secret: 'secreto1'}));
-
+app.use(session({connectToDb, secret: 'secreto1', resave: true, saveUninitialized: true}));
+app.use(passport.initialize())
+app.use(passport.session())
 
 //HANDLEBARS
 app.set('views', './views/hbs/partials');

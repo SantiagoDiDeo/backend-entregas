@@ -22,7 +22,7 @@ const connectToDb = async () => {
     return;
   } else {
     
-    console.log("Conexion existente");
+    console.log("Conexion existente")
     return;
   };
 };
