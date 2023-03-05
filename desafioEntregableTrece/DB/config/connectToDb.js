@@ -1,7 +1,8 @@
 const MongoStore = require('connect-mongo');
 const express = require('express');
 const session = require('express-session');
-const { mongoUrl } = require('../../enviroments/enviroment');
+const { options } = require('yargs');
+const  {mongoUrl}  = require('../../enviroments/enviroment');
 const app = express();
 
 
@@ -16,6 +17,7 @@ const connectToDb = async () => {
         cookie: {maxAge: 60000},  
         resave: true,
         saveUninitialized: true,
+        ...options,
       }))
     
           isConected = true;
