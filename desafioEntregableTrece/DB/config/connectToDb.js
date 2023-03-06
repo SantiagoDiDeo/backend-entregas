@@ -1,9 +1,9 @@
-const MongoStore = require('connect-mongo');
 const express = require('express');
 const session = require('express-session');
 const { options } = require('yargs');
 const  {mongoUrl}  = require('../../enviroments/enviroment');
 const app = express();
+const MongoStore = require('connect-mongo')(session);
 
 
 let isConnected;
@@ -11,7 +11,7 @@ let isConnected;
 const connectToDb = async () => {
   if(!isConnected) {
     await app.use(session({
-      store: MongoStore.create({
+      store: new MongoStore({
         mongoUrl: mongoUrl}),
         secret: 'secreto1',
         cookie: {maxAge: 60000},  

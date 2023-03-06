@@ -11,6 +11,8 @@ const {products} = require('./class/prodClass');
 const { chats} = require('./class/chatClass');
 const connectToDb = require('./DB/config/connectToDb');
 const passport = require('passport')
+const { fork } = require('child_process');
+
 
 
 app.use(express.json());
@@ -47,6 +49,16 @@ app.get('/', async (req, res) => {
     }
     res.send(JSON.stringify(datos,null,2))
   })
+
+  app.get('/api/randoms', (req, res) => {
+    const cant = req.query.cant || 100000000;
+    const child = fork('./routes/child/randoms.js');
+    child.send(cant);
+    child.on('message', (data) => {
+      res.json(JSON.stringify(data, null, 2));
+    });
+  });
+  
   
 //socket
 io.on('connection', async socket => {

@@ -124,7 +124,7 @@ if(!existentUser) {
 
 
 
-prodRouter.get('/randoms', (req, res) => {
+/* prodRouter.get('/api/randoms', (req, res) => {
   const cant = req.query.cant || 100000000;
   const child = fork('./randoms.js');
   child.send(cant);
@@ -132,7 +132,7 @@ prodRouter.get('/randoms', (req, res) => {
     res.json(data);
   });
 });
-
+ */
 
 
 prodRouter.get('/logout', async (req,res) => {
