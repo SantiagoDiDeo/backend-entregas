@@ -96,7 +96,7 @@ io.on('connection', async socket => {
 
 app.use('/api', prodRouter)
 
-let mode = FORK;
+let mode = 'FORK';
 
 if (process.argv.length > 2) {
 
@@ -119,13 +119,13 @@ if (mode === 'CLUSTER') {
     });
   } else {
     
-    server.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
       console.log(`Servidor en modo cluster corriendo en el proceso ${process.pid}`);
     });
   }
 } else {
 
-  server.listen(PORT, () => {
+  httpServer.listen(PORT, () => {
     console.log(`Servidor en modo fork corriendo en el proceso ${process.pid}`);
   });
 }

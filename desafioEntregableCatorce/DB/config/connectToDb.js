@@ -3,7 +3,7 @@ const session = require('express-session');
 const { options } = require('yargs');
 const  {mongoUrl}  = require('../../enviroments/enviroment');
 const app = express();
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 
 
 let isConnected;
